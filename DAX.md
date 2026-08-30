@@ -1,8 +1,6 @@
 # DAX Measures
 
-This file documents the DAX measures visible in the Power BI model screenshots.
-
-> **Note:** The screenshots show the measure names and the available fields, but not the original DAX expressions. The expressions below are reconstructed from those fields and are intended to match the visible measures. If your original PBIX measures use different business logic, keep the PBIX version as the source of truth.
+This file contains the DAX measures used in the FIFA World Cup 2026 Power BI dashboard.
 
 ---
 
@@ -130,9 +128,7 @@ SUM('matches_detailed'[home_xg])
 
 ---
 
-## Player / Squad Table
-
-The following measures correspond to the measures visible in the player/squad table.
+## `squads_and_players`
 
 ### Total Goals
 
@@ -148,8 +144,6 @@ Total Minutes =
 SUM('squads_and_players'[minutes_played])
 ```
 
-> If the PBIX uses a differently named minutes column, replace `[minutes_played]` with the actual field name.
-
 ### Total Players
 
 ```DAX
@@ -164,8 +158,6 @@ Total Saves =
 SUM('squads_and_players'[saves])
 ```
 
-> If saves are stored in another table, use that table instead.
-
 ### Total Yellow Cards
 
 ```DAX
@@ -179,8 +171,6 @@ SUM('squads_and_players'[yellow_cards])
 Average Market Value =
 AVERAGE('squads_and_players'[market_value_eur])
 ```
-
-> Use the actual market-value column name if it differs.
 
 ### Target Squad
 
@@ -223,7 +213,7 @@ DISTINCTCOUNT('referees'[referee_id])
 
 ---
 
-## Teams
+## `teams`
 
 ### Highest Ranking
 
@@ -231,8 +221,6 @@ DISTINCTCOUNT('referees'[referee_id])
 Highest Ranking =
 MIN('teams'[fifa_ranking_points])
 ```
-
-> If `[fifa_ranking_points]` is not the ranking field in the PBIX, use the actual FIFA ranking column.
 
 ### Total Teams
 
@@ -243,7 +231,7 @@ DISTINCTCOUNT('teams'[team_id])
 
 ---
 
-## Stadiums
+## `stadiums`
 
 ### Average Stadium Capacity
 
@@ -254,11 +242,9 @@ AVERAGE('stadiums'[capacity])
 
 ---
 
-## Useful Additional Measures
+## Additional Measures
 
-These are useful for the same FIFA World Cup dashboard and are consistent with the fields visible in the screenshots.
-
-### Total Matches by Status
+### Total Completed Matches
 
 ```DAX
 Total Completed Matches =
@@ -311,20 +297,3 @@ CALCULATE(
     'match_events'[event_type] = "Red Card"
 )
 ```
-
----
-
-## Important
-
-The uploaded `match_events` CSV contains these columns:
-
-- `event_id`
-- `match_id`
-- `minute`
-- `event_type`
-- `team_id`
-- `player_id`
-
-Therefore the **Yellow Cards** measure can be defined directly and reliably from that table.
-
-For the other measures, the screenshots expose the field names but not the underlying DAX formulas. The formulas above are reconstructed versions, not extracted originals.
